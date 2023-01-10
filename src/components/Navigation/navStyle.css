@@ -5,3 +5,8 @@
 .nav-item {
   padding: 5px;
 }
+
+.nav-item.active {
+  font-weight: bold;
+  text-decoration: none;
+}

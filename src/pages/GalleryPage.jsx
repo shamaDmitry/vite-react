@@ -3,14 +3,14 @@
 //useId
 //useContext
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import { getShowsByPageId } from '../services/tvService';
 
 import Pagination from '../components/Pagination/Pagination';
 
 const GalleryPage = () => {
-  const [pageId, setPageId] = useState(265); //265 max
+  const [pageId, setPageId] = useState(0); //265 max
   const [shows, setShows] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +21,8 @@ const GalleryPage = () => {
       setShows(res);
     })
   }, [pageId]);
+
+  console.log('render');
 
   const indexOfLastShow = currentPage * showsPerPage;
   const indexOfFirstShow = indexOfLastShow - showsPerPage;
@@ -36,19 +38,24 @@ const GalleryPage = () => {
         showPerPage={showsPerPage}
         totalShows={shows.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
 
       <div>
         page {pageId}
 
         {pageId <= 0 ? null : <button
-          onClick={() => setPageId(prevState => prevState - 1)}
+          onClick={() => {
+            setPageId(prevState => prevState - 1);
+          }}
         >
           prev
         </button>}
 
         {shows.length ? <button
-          onClick={() => setPageId(prevState => prevState + 1)}
+          onClick={() => {
+            setPageId(prevState => prevState + 1);
+          }}
         >
           next
         </button> : null}
@@ -56,10 +63,14 @@ const GalleryPage = () => {
 
       {currentShows.map(show => {
         return (
-          <div key={show.id}>
+          <div
+           key={show.id}
+           style={{textAlign: 'center', border: '1px solid #ccc', maxWidth: '40%', margin: '0 auto 20px auto'}}
+          >
             <h3>
               {show.id} {show.name}
             </h3>
+            <img src={show.image.medium} alt="" />
             <div dangerouslySetInnerHTML={{ __html: show.summary }} />
           </div>
         )
