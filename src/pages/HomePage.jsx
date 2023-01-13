@@ -3,6 +3,7 @@ import reactLogo from '../assets/react.svg'
 import { TYPICODE_API_URL } from '../services/api';
 import Post from '../components/Post';
 import { getAllPosts } from '../services/postService';
+import BaseLayout from '../layouts/BaseLayout';
 
 const HomePage = () => {
   const titleEl = useRef(null);
@@ -51,52 +52,54 @@ const HomePage = () => {
   }
 
   return (
-    <div className="App">
-      <h2>
-        Create post
-      </h2>
+    <BaseLayout>
+      <div className="App">
+        <h2>
+          Create post
+        </h2>
 
-      <div>
-        <label htmlFor="" style={{ display: 'block' }}>
-          Title
-        </label>
-        <input type="text" ref={titleEl} />
+        <div>
+          <label htmlFor="" style={{ display: 'block' }}>
+            Title
+          </label>
+          <input type="text" ref={titleEl} />
+        </div>
+
+        <div>
+          <label htmlFor="" style={{ display: 'block' }}>
+            Body
+          </label>
+          <textarea ref={bodyEl}></textarea>
+        </div>
+
+        <button
+          style={{ marginTop: 20 }}
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+        <hr />
+
+        <h2>
+          Posts
+        </h2>
+
+        <div style={{ textAlign: 'left' }}>
+          {
+            posts.map(post => {
+              return (
+                <Post
+                  key={post.id}
+                  title={post.title}
+                  body={post.body}
+                  isLoading={isLoading}
+                />
+              )
+            })
+          }
+        </div>
       </div>
-
-      <div>
-        <label htmlFor="" style={{ display: 'block' }}>
-          Body
-        </label>
-        <textarea ref={bodyEl}></textarea>
-      </div>
-
-      <button
-        style={{ marginTop: 20 }}
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
-      <hr />
-
-      <h2>
-        Posts
-      </h2>
-
-      <div style={{ textAlign: 'left' }}>
-        {
-          posts.map(post => {
-            return (
-              <Post
-                key={post.id}
-                title={post.title}
-                body={post.body}
-                isLoading={isLoading}
-              />
-            )
-          })
-        }
-      </div>
-    </div>
+    </BaseLayout>
   )
 }
 

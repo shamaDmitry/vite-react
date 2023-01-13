@@ -6,7 +6,7 @@
 import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import { getShowsByPageId } from '../services/tvService';
-
+import BaseLayout from '../layouts/BaseLayout';
 import Pagination from '../components/Pagination/Pagination';
 
 const GalleryPage = () => {
@@ -31,51 +31,53 @@ const GalleryPage = () => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
-    <div className="App">
-      <h1>Shows:</h1>
+    <BaseLayout>
+      <div className="App">
+        <h1>Shows:</h1>
 
-      <Pagination
-        showPerPage={showsPerPage}
-        totalShows={shows.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+        <Pagination
+          showPerPage={showsPerPage}
+          totalShows={shows.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
 
-      <div>
-        page {pageId}
+        <div>
+          page {pageId}
 
-        {pageId <= 0 ? null : <button
-          onClick={() => {
-            setPageId(prevState => prevState - 1);
-          }}
-        >
-          prev
-        </button>}
-
-        {shows.length ? <button
-          onClick={() => {
-            setPageId(prevState => prevState + 1);
-          }}
-        >
-          next
-        </button> : null}
-      </div>
-
-      {currentShows.map(show => {
-        return (
-          <div
-           key={show.id}
-           style={{textAlign: 'center', border: '1px solid #ccc', maxWidth: '40%', margin: '0 auto 20px auto'}}
+          {pageId <= 0 ? null : <button
+            onClick={() => {
+              setPageId(prevState => prevState - 1);
+            }}
           >
-            <h3>
-              {show.id} {show.name}
-            </h3>
-            <img src={show.image.medium} alt="" />
-            <div dangerouslySetInnerHTML={{ __html: show.summary }} />
-          </div>
-        )
-      })}
-    </div>
+            prev
+          </button>}
+
+          {shows.length ? <button
+            onClick={() => {
+              setPageId(prevState => prevState + 1);
+            }}
+          >
+            next
+          </button> : null}
+        </div>
+
+        {currentShows.map(show => {
+          return (
+            <div
+              key={show.id}
+              style={{ textAlign: 'center', border: '1px solid #ccc', maxWidth: '40%', margin: '0 auto 20px auto' }}
+            >
+              <h3>
+                {show.id} {show.name}
+              </h3>
+              <img src={show.image.medium} alt="" />
+              <div dangerouslySetInnerHTML={{ __html: show.summary }} />
+            </div>
+          )
+        })}
+      </div>
+    </BaseLayout>
   );
 }
 

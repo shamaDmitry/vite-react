@@ -1,20 +1,11 @@
 import Navigation from "../components/Navigation/Navigation";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-const BaseLayout = (props) => {
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   navigate('/home');
-  // }, []);
-
+const BaseLayout = ({ children }) => {
   return (
     <div>
       <Navigation />
 
-      <Outlet />
+      {children}
     </div>
   )
 }
